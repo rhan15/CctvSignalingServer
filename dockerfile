@@ -8,17 +8,16 @@ RUN dotnet restore "CctvSignalingServer.csproj"
 
 # Copy seluruh source code
 COPY . .
-RUN dotnet publish "CctvSignalingServer.csproj" -c Release -o /app/publish /p:UseAppHost=false
+# Tambahkan --verbosity normal di sini
+RUN dotnet publish "CctvSignalingServer.csproj" -c Release -o /app/publish /p:UseAppHost=false --verbosity normal
 
 # --- STAGE 2: Runtime ---
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# Konfigurasi Environment
 ENV ASPNETCORE_URLS=http://+:5000
 ENV TZ=Asia/Jakarta
 
-# Copy hasil publish dari stage build
 COPY --from=build /app/publish .
 
 ENTRYPOINT ["dotnet", "CctvSignalingServer.dll"]
