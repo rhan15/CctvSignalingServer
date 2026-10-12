@@ -1,0 +1,20 @@
+﻿version: '3.9'
+
+services:
+  cctv_signaling_server:
+    build: .
+    container_name: cctv_signaling_server
+    image: cctv-signaling-server
+
+    # (Opsional) Jika Anda ingin menyimpan file log atau config di luar container
+    volumes:
+      - ./logs:/app/logs
+
+    environment:
+      - TZ=Asia/Jakarta
+      - ASPNETCORE_URLS=http://+:5000
+
+    # Menggunakan network_mode host seperti script Python Anda sebelumnya
+    network_mode: host
+
+    restart: always

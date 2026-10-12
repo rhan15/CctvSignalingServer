@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy file project dan restore dependencies
-COPY ["NamaProjectAnda.csproj", "./"]
-RUN dotnet restore "NamaProjectAnda.csproj"
+COPY ["CctvSignalingServer.csproj", "./"]
+RUN dotnet restore "CctvSignalingServer.csproj"
 
 # Copy seluruh source code
 COPY . .
@@ -21,4 +21,4 @@ ENV ASPNETCORE_URLS=http://+:5000
 # Copy hasil publish dari stage build
 COPY --from=build /app/publish .
 
-ENTRYPOINT ["dotnet", "NamaProjectAnda.dll"]
+ENTRYPOINT ["dotnet", "CctvSignalingServer.dll"]
