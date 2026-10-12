@@ -11,6 +11,38 @@ app.UseWebSockets();
 var registeredAgents = new ConcurrentDictionary<string, WebSocket>();
 var activeClients = new ConcurrentDictionary<string, WebSocket>();
 
+// 3. ENDPOINT TEST GET API UNTUK DIAGNOSA
+app.MapGet("/test", async context =>
+{
+    var remoteIp = context.Connection.RemoteIpAddress?.ToString();
+    var localIp = context.Connection.LocalIpAddress?.ToString();
+    var userAgent = context.Request.Headers["User-Agent"].ToString();
+    var path = context.Request.Path;
+    var host = context.Request.Host.Value;
+
+    // Mengambil semua header untuk diagnosa lengkap
+    var headers = context.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString());
+
+    var info = new
+    {
+        status = "success",
+        message = "Server CctvSignalingServer berhasil diakses!",
+        serverTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+        requestInfo = new
+        {
+            remoteIp = remoteIp,
+            localIp = localIp,
+            host = host,
+            path = path,
+            userAgent = userAgent
+        },
+        headers = headers
+    };
+
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(info);
+});
+
 // 1. ENDPOINT AGENT
 app.Map("/ws/agent", async context =>
 {
