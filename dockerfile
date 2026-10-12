@@ -8,7 +8,7 @@ RUN dotnet restore "CctvSignalingServer.csproj"
 
 # Copy seluruh source code
 COPY . .
-RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CctvSignalingServer.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # --- STAGE 2: Runtime ---
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
