@@ -5,6 +5,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+app.UsePathBase("/CCTVSIGNALING/CctvSignalingServer");
 app.UseWebSockets();
 
 var registeredAgents = new ConcurrentDictionary<string, WebSocket>();
