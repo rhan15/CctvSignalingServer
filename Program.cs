@@ -163,4 +163,4 @@ app.Map("/ws/client", async context =>
     }
 });
 
-app.Run("http://localhost:5000");
+app.Run("http://0.0.0.0:5000");
