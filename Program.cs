@@ -285,6 +285,7 @@ app.Map("/ws/client", async context =>
 //    POST /api/agents/{kode}/commands
 //    Header : X-Api-Key: <Signaling:CommandApiKey>
 //    Body   : { "type":"add_camera", "cameraId":"cam_xxx", "src":"rtsp://..." }
+//             { "type":"update_camera", "cameraId":"cam_xxx", "src":"rtsp://..." }
 //             { "type":"remove_camera", "cameraId":"cam_xxx" }
 // ---------------------------------------------------------------------------
 app.MapPost("/api/agents/{code}/commands", async (string code, HttpRequest req) =>
@@ -309,8 +310,8 @@ app.MapPost("/api/agents/{code}/commands", async (string code, HttpRequest req) 
     try { type = cmd?["type"]?.GetValue<string>(); }
     catch (InvalidOperationException) { type = null; }
 
-    if (type is not ("add_camera" or "remove_camera"))
-        return Results.BadRequest(new { message = "type harus add_camera atau remove_camera." });
+    if (type is not ("add_camera" or "update_camera" or "remove_camera"))
+        return Results.BadRequest(new { message = "type harus add_camera, update_camera, atau remove_camera." });
 
     var sent = await agent.SendAsync(Encoding.UTF8.GetBytes(cmd!.ToJsonString()));
     return sent ? Results.Ok() : Results.StatusCode(StatusCodes.Status502BadGateway);
