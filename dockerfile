@@ -15,7 +15,7 @@ RUN dotnet publish "CctvSignalingServer.csproj" -c Release -o /app/publish /p:Us
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-ENV ASPNETCORE_URLS=http://+:5001
+ENV ASPNETCORE_URLS=http://+:5000
 ENV TZ=Asia/Jakarta
 
 COPY --from=build /app/publish .

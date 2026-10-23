@@ -317,7 +317,7 @@ app.MapPost("/api/agents/{code}/commands", async (string code, HttpRequest req) 
     return sent ? Results.Ok() : Results.StatusCode(StatusCodes.Status502BadGateway);
 });
 
-app.Run("http://0.0.0.0:5001");
+app.Run("http://0.0.0.0:5000");
 
 // ============================================================================
 // Pembungkus WebSocket. Satu WebSocket TIDAK boleh mengirim dua pesan bersamaan.
