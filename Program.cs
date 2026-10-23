@@ -35,7 +35,7 @@ app.UsePathBase("/CCTVSIGNALING/CctvSignalingServer");
 app.UseWebSockets();
 
 const int MaxMessageBytes = 256 * 1024; // pesan lebih besar dari ini ditolak (SDP biasanya < 10 KB)
-string commandApiKey = app.Configuration["Signaling:CommandApiKey"] ?? "";
+string commandApiKey = app.Configuration["Signaling:CommandApiKey"] ?? "string-rahasia";
 
 // kode toko -> koneksi agent
 var agents = new ConcurrentDictionary<string, Peer>();
@@ -317,7 +317,7 @@ app.MapPost("/api/agents/{code}/commands", async (string code, HttpRequest req) 
     return sent ? Results.Ok() : Results.StatusCode(StatusCodes.Status502BadGateway);
 });
 
-app.Run("http://0.0.0.0:5000");
+app.Run("http://0.0.0.0:5001");
 
 // ============================================================================
 // Pembungkus WebSocket. Satu WebSocket TIDAK boleh mengirim dua pesan bersamaan.
